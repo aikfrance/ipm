@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPM — Dossier Biographique & Registre Global</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --bg: #050805;
+            --card-bg: #0b110b;
+            --border: #162416;
+            --accent: #22c55e;
+            --accent-glow: rgba(34, 197, 94, 0.15);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        .dossier-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dossier-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 250px;
+            height: 250px;
+            background: var(--accent-glow);
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar-wrap {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            background: #020402;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .avatar-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-titles h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .profile-titles .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: rgba(34, 197, 94, 0.1);
+            padding: 3px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .status-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 20px;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+            overflow-x: auto;
+            padding-bottom: 5px;
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 10px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-main);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .tab-btn.active {
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+            position: relative;
+            z-index: 1;
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        strong {
+            color: var(--text-main);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .complex-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .complex-card {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--border);
+            padding: 16px;
+            border-radius: 10px;
+            transition: border-color 0.2s;
+        }
+
+        .complex-card:hover {
+            border-color: rgba(34, 197, 94, 0.4);
+        }
+
+        .complex-card h4 {
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .complex-card p {
+            font-size: 0.82rem;
+            margin: 0;
+        }
+
+        /* Style de la hiérarchie en catégories */
+        .hierarchy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .hierarchy-item {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hierarchy-info h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .hierarchy-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .hierarchy-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--accent);
+            border-radius: 4px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            white-space: nowrap;
+        }
+
+        .category-note {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+
+        .category-note strong {
+            color: var(--accent);
+        }
+
+        ul.styled-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        ul.styled-list li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        ul.styled-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .dossier-footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+        }
+
+        @media(max-width: 700px) {
+            .profile-header { flex-direction: column; align-items: flex-start; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .complex-grid { grid-template-columns: 1fr; }
+            .hierarchy-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dossier-wrapper">
+        <!-- En-tête Principal -->
+        <div class="profile-header">
+            <div class="profile-left">
+                <div class="avatar-wrap">
+                    <img src="https://i.imgur.com/qIGIEY8.png" alt="Logo IPM">
+                </div>
+                <div class="profile-titles">
+                    <h1>Inspection & Police Militaire</h1>
+                    <span class="tag">Branche d'Autorité Interne — Niveau 5 Clearance</span>
+                </div>
+            </div>
+            <div class="status-badge">
+                <div class="status-dot"></div>
+                RÉSEAU ACTIF / SÉCURISÉ
+            </div>
+        </div>
+
+        <!-- Navigation par Onglets -->
+        <div class="tabs-nav">
+            <button class="tab-btn active" onclick="switchTab(event, 'tab-overview')">01. Vue d'ensemble</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-genese')">02. Genèse & Historique</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-deploiement')">03. Déploiement</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-hierarchie')">04. Hiérarchie</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-mandat')">05. Mandat & Autorité</button>
+        </div>
+
+        <!-- ONGLET 1 : VUE D'ENSEMBLE -->
+        <div id="tab-overview" class="tab-content active">
+            <div class="section-title">📊 Synthèse de la Branche</div>
+            <p>L'<strong>Inspection & Police Militaire (IPM)</strong> constitue le pilier ultime de la régulation disciplinaire, de l'audit de sécurité et de la lutte contre la corruption au sein de la Fondation SCP.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-value">2005</div>
+                    <div class="stat-label">Année de Fondation</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">O5-CA</div>
+                    <div class="stat-label">Rattachement Direct</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">ALPHA</div>
+                    <div class="stat-label">Niveau d'Alerte Permanent</div>
+                </div>
+            </div>
+
+            <p>Aussi appelée <em>"La Tempête Fantôme"</em>, la branche opère en complète autonomie vis-à-vis des directions administratives locales pour garantir l'impartialité absolue de ses jugements.</p>
+        </div>
+
+        <!-- ONGLET 2 : GENÈSE -->
+        <div id="tab-genese" class="tab-content">
+            <div class="section-title">📜 Origines et Directive 07-Sigma</div>
+            <p>Fondée le <strong>23 novembre 2005 au Canada</strong>, l'institutionnalisation de l'IPM découle des conclusions accablantes du rapport d'audit 07-Sigma.</p>
+            <p>Ce rapport a mis en lumière l'incapacité systémique des directions de sites à s'auto-réguler en raison de conflits d'intérêts endémiques et de pressions hiérarchiques locales.</p>
+            
+            <div class="complex-grid">
+                <div class="complex-card">
+                    <h4>Directive O5-CA/41</h4>
+                    <p>Texte fondateur actant la création d'une force de frappe disciplinaire immunisée contre toute ingérence extérieure.</p>
+                </div>
+                <div class="complex-card">
+                    <h4>Réforme de 2012</h4>
+                    <p>Élargissement des compétences de l'IPM aux enquêtes préventives sur les brèches d'information de classe Keter.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ONGLET 3 : DÉPLOIEMENT -->
+        <div id="tab-deploiement" class="tab-content">
+            <div class="section-title">📍 Cartographie des Opérations (Zone Flads)</div>
+            <p>L'IPM maintient une présence active ou des équipes d'intervention d'alerte rapide sur les points névralgiques du réseau global :</p>
+            
+            <ul class="styled-list">
+                <li><strong>Site-19 :</strong> Surveillance continue des secteurs de confinement hautement instables.</li>
+                <li><strong>Site-06 :</strong> Audits disciplinaires ciblés et neutralisation des dérives de commandement.</li>
+                <li><strong>Site-88 :</strong> Inspection des protocoles éthiques et du traitement du personnel de Classe D.</li>
+                <li><strong>Site-45 :</strong> Sécurisation tactique des installations maritimes et des routes logistiques isolées.</li>
+            </ul>
+        </div>
+
+        <!-- ONGLET 4 : HIÉRARCHIE (MIS À JOUR AVEC TOUTES LES CATÉGORIES) -->
+        <div id="tab-hierarchie" class="tab-content">
+            <div class="section-title">🏛 Structure Hiérarchique Militaire</div>
+            <p>La hiérarchie IPM est militaire, simple et universelle :</p>
+            
+            <div class="hierarchy-list">
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Commandant IPM</h4>
+                        <span>Chef mondial de la spécialisation, responsable de la doctrine, de la stratégie et des directives.</span>
+                    </div>
+                    <div class="hierarchy-badge">COMMANDEMENT</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Capitaine IPM</h4>
+                        <span>Sous-chef — seconde le commandant et assure la gestion administrative des opérations globales.</span>
+                    </div>
+                    <div class="hierarchy-badge">COMMANDEMENT</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Lieutenant IPM</h4>
+                        <span>Responsable tactique — dirige et valide les interventions sur sites.</span>
+                    </div>
+                    <div class="hierarchy-badge">COMMANDEMENT</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Sergent IPM</h4>
+                        <span>Personnel d’encadrement terrain — gestion des équipes en inspection active.</span>
+                    </div>
+                    <div class="hierarchy-badge">FORCES STANDARD</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Caporal IPM</h4>
+                        <span>Soutien opérationnel — relève, consignation et exécution des ordres immédiats.</span>
+                    </div>
+                    <div class="hierarchy-badge">FORCES STANDARD</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Agent IPM</h4>
+                        <span>Unité opérationnelle — inspections, audits, contrôle, discipline.</span>
+                    </div>
+                    <div class="hierarchy-badge">FORCES STANDARD</div>
+                </div>
+            </div>
+
+            <div class="category-note">
+                <p><strong>Note d'organisation :</strong> Les grades Sergent, Caporal et Agent forment les forces militaires standard. Les trois premiers grades représentent le commandement officiel.</p>
+            </div>
+        </div>
+
+        <!-- ONGLET 5 : MANDAT -->
+        <div id="tab-mandat" class="tab-content">
+            <div class="section-title">⚖️ Prérogatives et Autorité Absolue</div>
+            <p>Les agents et inspecteurs de l'IPM disposent d'une immunité fonctionnelle totale et de pouvoirs exceptionnels garantissant l'intégrité de la Fondation.</p>
+            
+            <div class="complex-grid">
+                <div class="complex-card">
+                    <h4>Intervention sans préavis</h4>
+                    <p>Droit d'accès illimité à n'importe quel secteur, sans mandat ni notification préalable au directeur de site.</p>
+                </div>
+                <div class="complex-card">
+                    <h4>Hiérarchie Supérieure</h4>
+                    <p>Capacité de suspendre, juger et destituer n'importe quel membre du personnel, quel que soit son grade.</p>
+                </div>
+                <div class="complex-card">
+                    <h4>Neutralité Pure</h4>
+                    <p>Indépendance totale vis-à-vis de la structure de commandement locale des sites audités.</p>
+                </div>
+                <div class="complex-card">
+                    <h4>Décisions Irrévocables</h4>
+                    <p>Sanctions exécutées immédiatement. Seul le Conseil O5 possède l'autorité d'invalider un jugement de l'IPM.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pied de page technique -->
+        <div class="dossier-footer">
+            <span>FICHE_REF: #IPM-BIO-GLOBAL-2026</span>
+            <span>ACCÈS RESTREINT — SURVEILLANCE ACTIVE</span>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(evt, tabId) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            evt.currentTarget.classList.add('active');
+        }
+    </script>
+</body>
+</html>
