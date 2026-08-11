@@ -115,6 +115,13 @@
             border: 1px solid rgba(34, 197, 94, 0.2);
         }
 
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
         .status-badge {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.75rem;
@@ -141,6 +148,28 @@
             0% { opacity: 1; }
             50% { opacity: 0.4; }
             100% { opacity: 1; }
+        }
+
+        .discord-btn {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 6px 12px;
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 20px;
+            color: #8ea1e1;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .discord-btn:hover {
+            background: rgba(88, 101, 242, 0.2);
+            border-color: rgba(88, 101, 242, 0.6);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(88, 101, 242, 0.2);
         }
 
         .tabs-nav {
@@ -276,7 +305,6 @@
             margin: 0;
         }
 
-        /* Style de la hiérarchie en catégories */
         .hierarchy-list {
             display: flex;
             flex-direction: column;
@@ -368,6 +396,7 @@
 
         @media(max-width: 700px) {
             .profile-header { flex-direction: column; align-items: flex-start; }
+            .header-right { align-items: flex-start; width: 100%; }
             .stats-grid { grid-template-columns: 1fr; }
             .complex-grid { grid-template-columns: 1fr; }
             .hierarchy-item { flex-direction: column; align-items: flex-start; gap: 8px; }
@@ -388,9 +417,14 @@
                     <span class="tag">Branche d'Autorité Interne — Niveau 5 Clearance</span>
                 </div>
             </div>
-            <div class="status-badge">
-                <div class="status-dot"></div>
-                RÉSEAU ACTIF / SÉCURISÉ
+            <div class="header-right">
+                <div class="status-badge">
+                    <div class="status-dot"></div>
+                    RÉSEAU ACTIF / SÉCURISÉ
+                </div>
+                <a href="https://discord.gg/8XDDm6cFGA" target="_blank" class="discord-btn">
+                    <span>Rejoindre le Discord</span>
+                </a>
             </div>
         </div>
 
@@ -457,7 +491,7 @@
             </ul>
         </div>
 
-        <!-- ONGLET 4 : HIÉRARCHIE (MIS À JOUR AVEC TOUTES LES CATÉGORIES) -->
+        <!-- ONGLET 4 : HIÉRARCHIE -->
         <div id="tab-hierarchie" class="tab-content">
             <div class="section-title">🏛 Structure Hiérarchique Militaire</div>
             <p>La hiérarchie IPM est militaire, simple et universelle :</p>
@@ -473,7 +507,7 @@
 
                 <div class="hierarchy-item">
                     <div class="hierarchy-info">
-                        <h4>Capitaine IPM</h4>
+                        <h4>Capitaine</h4>
                         <span>Sous-chef — seconde le commandant et assure la gestion administrative des opérations globales.</span>
                     </div>
                     <div class="hierarchy-badge">COMMANDEMENT</div>
@@ -481,7 +515,7 @@
 
                 <div class="hierarchy-item">
                     <div class="hierarchy-info">
-                        <h4>Lieutenant IPM</h4>
+                        <h4>Lieutenant</h4>
                         <span>Responsable tactique — dirige et valide les interventions sur sites.</span>
                     </div>
                     <div class="hierarchy-badge">COMMANDEMENT</div>
@@ -489,7 +523,7 @@
 
                 <div class="hierarchy-item">
                     <div class="hierarchy-info">
-                        <h4>Sergent IPM</h4>
+                        <h4>Sergent</h4>
                         <span>Personnel d’encadrement terrain — gestion des équipes en inspection active.</span>
                     </div>
                     <div class="hierarchy-badge">FORCES STANDARD</div>
@@ -497,7 +531,7 @@
 
                 <div class="hierarchy-item">
                     <div class="hierarchy-info">
-                        <h4>Caporal IPM</h4>
+                        <h4>Caporal</h4>
                         <span>Soutien opérationnel — relève, consignation et exécution des ordres immédiats.</span>
                     </div>
                     <div class="hierarchy-badge">FORCES STANDARD</div>
