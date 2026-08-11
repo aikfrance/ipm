@@ -324,6 +324,16 @@
             align-items: center;
         }
 
+        .hierarchy-item.presidence {
+            border-left-color: #38bdf8;
+        }
+
+        .hierarchy-item.presidence .hierarchy-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            border-color: rgba(56, 189, 248, 0.2);
+        }
+
         .hierarchy-info h4 {
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.95rem;
@@ -491,12 +501,28 @@
             </ul>
         </div>
 
-        <!-- ONGLET 4 : HIÉRARCHIE -->
+        <!-- ONGLET 4 : HIÉRARCHIE (MIS À JOUR AVEC PRÉSIDENCE) -->
         <div id="tab-hierarchie" class="tab-content">
             <div class="section-title">🏛 Structure Hiérarchique Militaire</div>
             <p>La hiérarchie IPM est militaire, simple et universelle :</p>
             
             <div class="hierarchy-list">
+                <div class="hierarchy-item presidence">
+                    <div class="hierarchy-info">
+                        <h4>Président IPM</h4>
+                        <span>Direction suprême et politique de l'institution, garant de la vision globale et des relations avec le Conseil O5.</span>
+                    </div>
+                    <div class="hierarchy-badge">PRÉSIDENCE</div>
+                </div>
+
+                <div class="hierarchy-item presidence">
+                    <div class="hierarchy-info">
+                        <h4>Président Adjoint IPM</h4>
+                        <span>Second direct du président, supervise la coordination inter-branches et supplée le président en cas d'absence.</span>
+                    </div>
+                    <div class="hierarchy-badge">PRÉSIDENCE</div>
+                </div>
+
                 <div class="hierarchy-item">
                     <div class="hierarchy-info">
                         <h4>Commandant IPM</h4>
@@ -547,7 +573,7 @@
             </div>
 
             <div class="category-note">
-                <p><strong>Note d'organisation :</strong> Les grades Sergent, Caporal et Agent forment les forces militaires standard. Les trois premiers grades représentent le commandement officiel.</p>
+                <p><strong>Note d'organisation :</strong> Les grades Sergent, Caporal et Agent forment les forces militaires standard. Le Commandant, le Capitaine et le Lieutenant représentent le commandement officiel, tandis que la Présidence veille au sommet de l'institution.</p>
             </div>
         </div>
 
