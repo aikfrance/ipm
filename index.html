@@ -173,6 +173,7 @@
             box-shadow: 0 0 10px rgba(88, 101, 242, 0.2);
         }
 
+        /* --- NAVIGATION WRAPPER & SCROLLBAR DESIGN CORRIGÉ --- */
         .tabs-nav {
             display: flex;
             gap: 8px;
@@ -180,7 +181,29 @@
             position: relative;
             z-index: 1;
             overflow-x: auto;
-            padding-bottom: 5px;
+            padding-bottom: 8px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) var(--border);
+        }
+
+        /* Style de la barre de défilement pour les navigateurs WebKit (Chrome, Edge, Safari) */
+        .tabs-nav::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tabs-nav::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 3px;
+        }
+
+        .tabs-nav::-webkit-scrollbar-thumb {
+            background: var(--accent);
+            border-radius: 3px;
+            box-shadow: 0 0 6px var(--accent-glow);
+        }
+
+        .tabs-nav::-webkit-scrollbar-thumb:hover {
+            background: #16a34a;
         }
 
         .tab-btn {
@@ -195,6 +218,7 @@
             font-weight: 600;
             transition: all 0.2s ease;
             white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .tab-btn:hover {
@@ -327,7 +351,6 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Bannières pour documents liés */
         .external-doc-banner {
             background: rgba(34, 197, 94, 0.05);
             border: 1px dashed rgba(34, 197, 94, 0.4);
@@ -386,7 +409,6 @@
 <body>
 
     <div class="dossier-wrapper">
-        <!-- En-tête Principal -->
         <div class="profile-header">
             <div class="profile-left">
                 <div class="avatar-wrap">
@@ -408,7 +430,7 @@
             </div>
         </div>
 
-        <!-- Navigation par Onglets -->
+        <!-- Navigation par Onglets (Barre stylisée et épurée) -->
         <div class="tabs-nav">
             <button class="tab-btn active" onclick="switchTab(event, 'tab-overview')">01. Vue d'ensemble</button>
             <button class="tab-btn" onclick="switchTab(event, 'tab-genese')">02. Genèse & Historique</button>
@@ -417,7 +439,6 @@
             <button class="tab-btn" onclick="switchTab(event, 'tab-mandat')">05. Mandat & Décret O5</button>
         </div>
 
-        <!-- ONGLET 1 : VUE D'ENSEMBLE -->
         <div id="tab-overview" class="tab-content active">
             <div class="section-title">📊 Synthèse de la Branche</div>
             <p>L'<strong>Inspection & Police Militaire (IPM)</strong> constitue le pilier ultime de la régulation disciplinaire, de l'audit de sécurité et de la lutte contre la corruption au sein de la Fondation SCP.</p>
@@ -440,7 +461,6 @@
             <p>Aussi appelée <em>"La Tempête Fantôme"</em>, la branche opère en complète autonomie vis-à-vis des directions administratives locales pour garantir l'impartialité absolue de ses jugements.</p>
         </div>
 
-        <!-- ONGLET 2 : GENÈSE -->
         <div id="tab-genese" class="tab-content">
             <div class="section-title">📜 Origines et Directive 07-Sigma</div>
             <p>Fondée le <strong>23 novembre 2005 au Canada</strong>, l'institutionnalisation de l'IPM découle des conclusions accablantes du rapport d'audit 07-Sigma.</p>
@@ -458,7 +478,6 @@
             </div>
         </div>
 
-        <!-- ONGLET 3 : DÉPLOIEMENT -->
         <div id="tab-deploiement" class="tab-content">
             <div class="section-title">📍 Cartographie des Opérations (Zone Flads)</div>
             <p>L'IPM maintient une présence active ou des équipes d'intervention d'alerte rapide sur les points névralgiques du réseau global :</p>
@@ -471,10 +490,9 @@
             </ul>
         </div>
 
-        <!-- ONGLET 4 : HIÉRARCHIE & SPÉCIALISATIONS (Lien vers hierarchie.html) -->
         <div id="tab-hierarchie" class="tab-content">
             <div class="section-title">🏛 Structure Hiérarchique & Unités Spécialisées</div>
-            <p>La gestion des effectifs, la chaîne de commandement ainsi que l'ensemble des spécialisations opérationnelles (Inspecteur, Protection Rapprochement, Sentinelle) font l'objet d'un registre officiel dédié.</p>
+            <p>La gestion des effectifs, la chaîne de commandement ainsi que l'ensemble des spécialisations opérationnelles (Inspecteur, Protection Rapprochée, Sentinelle) font l'objet d'un registre officiel dédié.</p>
             
             <div class="external-doc-banner">
                 <h4>Registre de la Hiérarchie & Spécialisations</h4>
@@ -485,7 +503,6 @@
             </div>
         </div>
 
-        <!-- ONGLET 5 : MANDAT & DÉCRET O5 (Lien vers document_ipm.html) -->
         <div id="tab-mandat" class="tab-content">
             <div class="section-title">⚖️ Mandat & Certification Conseil O5</div>
             <p>Les agents et inspecteurs de l'IPM disposent d'une immunité fonctionnelle totale et de pouvoirs exceptionnels garantis par le Conseil O5.</p>
@@ -499,7 +516,6 @@
             </div>
         </div>
 
-        <!-- Pied de page technique -->
         <div class="dossier-footer">
             <span>FICHE_REF: #IPM-BIO-GLOBAL-2026</span>
             <span>ACCÈS RESTREINT — SURVEILLANCE ACTIVE</span>
