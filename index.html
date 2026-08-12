@@ -306,72 +306,6 @@
             margin: 0;
         }
 
-        .hierarchy-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-            margin-bottom: 15px;
-        }
-
-        .hierarchy-item {
-            background: rgba(255, 255, 255, 0.015);
-            border: 1px solid var(--border);
-            border-left: 3px solid var(--accent);
-            padding: 14px 18px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .hierarchy-item.presidence {
-            border-left-color: #38bdf8;
-        }
-
-        .hierarchy-item.presidence .hierarchy-badge {
-            background: rgba(56, 189, 248, 0.1);
-            color: #38bdf8;
-            border-color: rgba(56, 189, 248, 0.2);
-        }
-
-        .hierarchy-info h4 {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.95rem;
-            color: var(--text-main);
-            margin-bottom: 2px;
-        }
-
-        .hierarchy-info span {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .hierarchy-badge {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            background: rgba(34, 197, 94, 0.1);
-            color: var(--accent);
-            border-radius: 4px;
-            border: 1px solid rgba(34, 197, 94, 0.2);
-            white-space: nowrap;
-        }
-
-        .category-note {
-            background: rgba(0, 0, 0, 0.2);
-            border: 1px solid var(--border);
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 10px;
-        }
-
-        .category-note strong {
-            color: var(--accent);
-        }
-
         ul.styled-list {
             list-style: none;
             margin-top: 10px;
@@ -393,7 +327,7 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Lien vers le document officiel externe */
+        /* Bannières pour documents liés */
         .external-doc-banner {
             background: rgba(34, 197, 94, 0.05);
             border: 1px dashed rgba(34, 197, 94, 0.4);
@@ -446,7 +380,6 @@
             .header-right { align-items: flex-start; width: 100%; }
             .stats-grid { grid-template-columns: 1fr; }
             .complex-grid { grid-template-columns: 1fr; }
-            .hierarchy-item { flex-direction: column; align-items: flex-start; gap: 8px; }
         }
     </style>
 </head>
@@ -480,7 +413,7 @@
             <button class="tab-btn active" onclick="switchTab(event, 'tab-overview')">01. Vue d'ensemble</button>
             <button class="tab-btn" onclick="switchTab(event, 'tab-genese')">02. Genèse & Historique</button>
             <button class="tab-btn" onclick="switchTab(event, 'tab-deploiement')">03. Déploiement</button>
-            <button class="tab-btn" onclick="switchTab(event, 'tab-hierarchie')">04. Hiérarchie</button>
+            <button class="tab-btn" onclick="switchTab(event, 'tab-hierarchie')">04. Hiérarchie & Spécialisations</button>
             <button class="tab-btn" onclick="switchTab(event, 'tab-mandat')">05. Mandat & Décret O5</button>
         </div>
 
@@ -538,83 +471,21 @@
             </ul>
         </div>
 
-        <!-- ONGLET 4 : HIÉRARCHIE -->
+        <!-- ONGLET 4 : HIÉRARCHIE & SPÉCIALISATIONS (Lien vers hierarchie.html) -->
         <div id="tab-hierarchie" class="tab-content">
-            <div class="section-title">🏛 Structure Hiérarchique Militaire</div>
-            <p>La hiérarchie IPM est militaire, simple et universelle :</p>
+            <div class="section-title">🏛 Structure Hiérarchique & Unités Spécialisées</div>
+            <p>La gestion des effectifs, la chaîne de commandement ainsi que l'ensemble des spécialisations opérationnelles (Inspecteur, Protection Rapprochement, Sentinelle) font l'objet d'un registre officiel dédié.</p>
             
-            <div class="hierarchy-list">
-                <div class="hierarchy-item presidence">
-                    <div class="hierarchy-info">
-                        <h4>Président IPM</h4>
-                        <span>Direction suprême et politique de l'institution, garant de la vision globale et des relations avec le Conseil O5.</span>
-                    </div>
-                    <div class="hierarchy-badge">PRÉSIDENCE</div>
-                </div>
-
-                <div class="hierarchy-item presidence">
-                    <div class="hierarchy-info">
-                        <h4>Président Adjoint IPM</h4>
-                        <span>Second direct du président, supervise la coordination inter-branches et supplée le président en cas d'absence.</span>
-                    </div>
-                    <div class="hierarchy-badge">PRÉSIDENCE</div>
-                </div>
-
-                <div class="hierarchy-item">
-                    <div class="hierarchy-info">
-                        <h4>Commandant IPM</h4>
-                        <span>Chef mondial de la spécialisation, responsable de la doctrine, de la stratégie et des directives.</span>
-                    </div>
-                    <div class="hierarchy-badge">COMMANDEMENT</div>
-                </div>
-
-                <div class="hierarchy-item">
-                    <div class="hierarchy-info">
-                        <h4>Capitaine</h4>
-                        <span>Sous-chef — seconde le commandant et assure la gestion administrative des opérations globales.</span>
-                    </div>
-                    <div class="hierarchy-badge">COMMANDEMENT</div>
-                </div>
-
-                <div class="hierarchy-item">
-                    <div class="hierarchy-info">
-                        <h4>Lieutenant</h4>
-                        <span>Responsable tactique — dirige et valide les interventions sur sites.</span>
-                    </div>
-                    <div class="hierarchy-badge">COMMANDEMENT</div>
-                </div>
-
-                <div class="hierarchy-item">
-                    <div class="hierarchy-info">
-                        <h4>Sergent</h4>
-                        <span>Personnel d’encadrement terrain — gestion des équipes en inspection active.</span>
-                    </div>
-                    <div class="hierarchy-badge">FORCES STANDARD</div>
-                </div>
-
-                <div class="hierarchy-item">
-                    <div class="hierarchy-info">
-                        <h4>Caporal</h4>
-                        <span>Soutien opérationnel — relève, consignation et exécution des ordres immédiats.</span>
-                    </div>
-                    <div class="hierarchy-badge">FORCES STANDARD</div>
-                </div>
-
-                <div class="hierarchy-item">
-                    <div class="hierarchy-info">
-                        <h4>Agent IPM</h4>
-                        <span>Unité opérationnelle — inspections, audits, contrôle, discipline.</span>
-                    </div>
-                    <div class="hierarchy-badge">FORCES STANDARD</div>
-                </div>
-            </div>
-
-            <div class="category-note">
-                <p><strong>Note d'organisation :</strong> Les grades Sergent, Caporal et Agent forment les forces militaires standard. Le Commandant, le Capitaine et le Lieutenant représentent le commandement officiel, tandis que la Présidence veille au sommet de l'institution.</p>
+            <div class="external-doc-banner">
+                <h4>Registre de la Hiérarchie & Spécialisations</h4>
+                <p>Consultez la structure complète incluant la Présidence, le Commandement, les Forces Standard et les Unités Spécialisées.</p>
+                <a href="hierarchie.html" target="_blank" class="external-link-btn">
+                    Ouvrir la Hiérarchie Complète (hierarchie.html)
+                </a>
             </div>
         </div>
 
-        <!-- ONGLET 5 : MANDAT & LIEN VERS LE DOCUMENT OFFICIEL -->
+        <!-- ONGLET 5 : MANDAT & DÉCRET O5 (Lien vers document_ipm.html) -->
         <div id="tab-mandat" class="tab-content">
             <div class="section-title">⚖️ Mandat & Certification Conseil O5</div>
             <p>Les agents et inspecteurs de l'IPM disposent d'une immunité fonctionnelle totale et de pouvoirs exceptionnels garantis par le Conseil O5.</p>
@@ -622,7 +493,6 @@
             <div class="external-doc-banner">
                 <h4>Directive Exécutive Suprême — Certifiée O5</h4>
                 <p>Consultez l'acte officiel scellé régissant les pleins pouvoirs et les dispositions réglementaires de l'IPM.</p>
-                <!-- Lien direct reliant index.html à document_ipm.html -->
                 <a href="document_ipm.html" target="_blank" class="external-link-btn">
                     Ouvrir le Document Officiel (document_ipm.html)
                 </a>
