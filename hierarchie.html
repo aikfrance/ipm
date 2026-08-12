@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPM — Hiérarchie & Spécialisations</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+        :root {
+            --bg: #020402;
+            --card-bg: #070d07;
+            --border: #1e331e;
+            --accent: #22c55e;
+            --accent-glow: rgba(34, 197, 94, 0.2);
+            --blue-accent: #38bdf8;
+            --red-accent: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        .hierarchie-wrapper {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hierarchie-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-family: 'Cinzel', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.015);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 10px;
+        }
+
+        .hierarchie-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .foundation-seal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .seal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #000;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--accent-glow);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .seal-text h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .seal-text span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .hierarchie-meta {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .hierarchie-meta span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .hierarchie-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hierarchie-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .hierarchie-title p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hierarchie-body {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+
+        .section-category {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 25px;
+            margin-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 6px;
+        }
+
+        .hierarchy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .hierarchy-item {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 14px 18px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hierarchy-item.presidence {
+            border-left-color: var(--blue-accent);
+        }
+
+        .hierarchy-item.presidence .hierarchy-badge {
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--blue-accent);
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .hierarchy-item.specialisation {
+            border-left-color: #f59e0b;
+        }
+
+        .hierarchy-item.specialisation .hierarchy-badge {
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border-color: rgba(245, 158, 11, 0.3);
+        }
+
+        .hierarchy-info h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .hierarchy-info span {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .hierarchy-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            background: rgba(34, 197, 94, 0.1);
+            color: var(--accent);
+            border-radius: 4px;
+            border: 1px solid rgba(34, 197, 94, 0.2);
+            white-space: nowrap;
+        }
+
+        .hierarchie-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid var(--border);
+            padding-top: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .signature-block .sign-title {
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stamp {
+            border: 2px dashed var(--accent);
+            color: var(--accent);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transform: rotate(-5deg);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .action-links {
+            margin-top: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .nav-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: rgba(34, 197, 94, 0.6);
+            color: #fff;
+        }
+
+        @media(max-width: 700px) {
+            .hierarchie-header { flex-direction: column; gap: 15px; }
+            .hierarchie-meta { text-align: left; }
+            .hierarchie-footer { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .hierarchy-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .action-links { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hierarchie-wrapper">
+        <div class="watermark">IPM HIERARCHY</div>
+
+        <!-- En-tête du document officiel -->
+        <div class="hierarchie-header">
+            <div class="foundation-seal">
+                <div class="seal-icon">SCP</div>
+                <div class="seal-text">
+                    <h2>CONSEIL O5 / IPM</h2>
+                    <span>REGISTRE DES AFFECTATIONS</span>
+                </div>
+            </div>
+            <div class="hierarchie-meta">
+                <div>DOC-ID: <span>IPM-REG-HIER-2026</span></div>
+                <div>CLASSIFICATION: <span>NIVEAU 5 / OFFICIEL</span></div>
+                <div>DATE: <span>12 AOÛT 2026</span></div>
+            </div>
+        </div>
+
+        <!-- Titre du Document -->
+        <div class="hierarchie-title">
+            <h1>STRUCTURE HIÉRARCHIQUE & SPÉCIALISATIONS</h1>
+            <p>Inspection & Police Militaire</p>
+        </div>
+
+        <!-- Corps : Liste des grades et spécialisations -->
+        <div class="hierarchie-body">
+            
+            <div class="section-category">1. Présidence & Commandement</div>
+            <div class="hierarchy-list">
+                <div class="hierarchy-item presidence">
+                    <div class="hierarchy-info">
+                        <h4>Président IPM</h4>
+                        <span>Direction suprême et politique de l'institution, garant de la vision globale et des relations avec le Conseil O5.</span>
+                    </div>
+                    <div class="hierarchy-badge">PRÉSIDENCE</div>
+                </div>
+
+                <div class="hierarchy-item presidence">
+                    <div class="hierarchy-info">
+                        <h4>Président Adjoint IPM</h4>
+                        <span>Second direct du président, supervise la coordination inter-branches et supplée le président en cas d'absence.</span>
+                    </div>
+                    <div class="hierarchy-badge">PRÉSIDENCE</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Commandant IPM</h4>
+                        <span>Chef mondial de la spécialisation, responsable de la doctrine, de la stratégie et des directives.</span>
+                    </div>
+                    <div class="hierarchy-badge">COMMANDEMENT</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Capitaine</h4>
+                        <span>Sous-chef — seconde le commandant et assure la gestion administrative des opérations globales.</span>
+                    </div>
+                    <div class="hierarchy-badge">COMMANDEMENT</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Lieutenant</h4>
+                        <span>Responsable tactique — dirige et valide les interventions sur sites.</span>
+                    </div>
+                    <div class="hierarchy-badge">COMMANDEMENT</div>
+                </div>
+            </div>
+
+            <div class="section-category">2. Forces Militaires Standard</div>
+            <div class="hierarchy-list">
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Sergent</h4>
+                        <span>Personnel d’encadrement terrain — gestion des équipes en inspection active.</span>
+                    </div>
+                    <div class="hierarchy-badge">STANDARD</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Caporal</h4>
+                        <span>Soutien opérationnel — relève, consignation et exécution des ordres immédiats.</span>
+                    </div>
+                    <div class="hierarchy-badge">STANDARD</div>
+                </div>
+
+                <div class="hierarchy-item">
+                    <div class="hierarchy-info">
+                        <h4>Agent IPM</h4>
+                        <span>Unité opérationnelle — inspections, audits, contrôle, discipline.</span>
+                    </div>
+                    <div class="hierarchy-badge">STANDARD</div>
+                </div>
+            </div>
+
+            <div class="section-category">3. Unités Spécialisées</div>
+            <div class="hierarchy-list">
+                <div class="hierarchy-item specialisation">
+                    <div class="hierarchy-info">
+                        <h4>Inspecteur IPM</h4>
+                        <span>Spécialiste des enquêtes approfondies, des interrogatoires de haute sécurité et de l'audit de corruption interne.</span>
+                    </div>
+                    <div class="hierarchy-badge">SPÉCIALISATION</div>
+                </div>
+
+                <div class="hierarchy-item specialisation">
+                    <div class="hierarchy-info">
+                        <h4>Protection Rapprochée IPM</h4>
+                        <span>Unité d'élite assignée à la sécurité rapprochée de la Haute Présidence et des hauts dignitaires de la Fondation.</span>
+                    </div>
+                    <div class="hierarchy-badge">SPÉCIALISATION</div>
+                </div>
+
+                <div class="hierarchy-item specialisation">
+                    <div class="hierarchy-info">
+                        <h4>Sentinelle IPM (Tireur d'élite)</h4>
+                        <span>Opérateur spécialisé dans l'appui tactique longue distance, la reconnaissance de zone et l'élimination de menaces ciblées.</span>
+                    </div>
+                    <div class="hierarchy-badge">SPÉCIALISATION</div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Pied de page & Signatures -->
+        <div class="hierarchie-footer">
+            <div class="signature-block">
+                <div class="sign-title">VALIDATION OFFICIELLE</div>
+                <div>Registre centralisé des effectifs IPM.</div>
+                <div>Accès restreint au personnel habilité.</div>
+            </div>
+            <div class="stamp">
+                REGISTRE OFFICIEL<br>VALIDÉ
+            </div>
+        </div>
+
+        <!-- Liens de navigation -->
+        <div class="action-links">
+            <a href="index.html" class="nav-link">
+                <span>← Retour au Dossier Principal</span>
+            </a>
+            <a href="document_ipm.html" class="nav-link">
+                <span>Voir le Décret O5 →</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
