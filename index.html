@@ -393,59 +393,40 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Style du Décret O5 intégré */
-        .decree-box {
-            background: rgba(2, 4, 2, 0.6);
-            border: 2px solid var(--border);
+        /* Lien vers le document officiel externe */
+        .external-doc-banner {
+            background: rgba(34, 197, 94, 0.05);
+            border: 1px dashed rgba(34, 197, 94, 0.4);
+            padding: 20px;
             border-radius: 12px;
-            padding: 25px;
-            position: relative;
-            overflow: hidden;
+            text-align: center;
             margin-top: 15px;
         }
 
-        .decree-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--accent), transparent);
-        }
-
-        .decree-header-mini {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 15px;
-            margin-bottom: 15px;
-        }
-
-        .decree-seal-text h3 {
+        .external-doc-banner h4 {
             font-family: 'Cinzel', serif;
-            font-size: 0.95rem;
             color: var(--text-main);
+            margin-bottom: 8px;
         }
 
-        .decree-seal-text span {
+        .external-link-btn {
+            display: inline-block;
+            margin-top: 12px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
+            padding: 10px 20px;
+            background: rgba(34, 197, 94, 0.15);
             color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s;
         }
 
-        .decree-stamp-mini {
-            border: 2px dashed var(--red-accent);
-            color: var(--red-accent);
-            font-family: 'Cinzel', serif;
-            font-weight: 700;
-            font-size: 0.65rem;
-            padding: 4px 10px;
-            border-radius: 4px;
-            transform: rotate(-5deg);
-            text-transform: uppercase;
-            background: rgba(239, 68, 68, 0.05);
+        .external-link-btn:hover {
+            background: var(--accent);
+            color: #000;
+            box-shadow: 0 0 15px var(--accent-glow);
         }
 
         .dossier-footer {
@@ -633,22 +614,18 @@
             </div>
         </div>
 
-        <!-- ONGLET 5 : MANDAT & DÉCRET O5 -->
+        <!-- ONGLET 5 : MANDAT & LIEN VERS LE DOCUMENT OFFICIEL -->
         <div id="tab-mandat" class="tab-content">
-            <div class="section-title">⚖️ Mandat & Document Officiel Certifié</div>
+            <div class="section-title">⚖️ Mandat & Certification Conseil O5</div>
             <p>Les agents et inspecteurs de l'IPM disposent d'une immunité fonctionnelle totale et de pouvoirs exceptionnels garantis par le Conseil O5.</p>
             
-            <div class="decree-box">
-                <div class="decree-header-mini">
-                    <div class="decree-seal-text">
-                        <h3>CONSEIL O5 — DIRECTIVE EXÉCUTIVE</h3>
-                        <span>DOC-ID: O5-DIR-2026-994X | CLASSIFICATION: NIVEAU 5</span>
-                    </div>
-                    <div class="decree-stamp-mini">
-                        CERTIFIÉ OFFICIEL<br>CONSEIL O5
-                    </div>
-                </div>
-                <p>Par le présent décret, le <strong>Conseil O5</strong> valide la structure hiérarchique intégrale de l'IPM. L'ensemble des ordres émanant du Président IPM, du Président Adjoint IPM et du commandement possède une valeur exécutoire immédiate et irrévocable sur tous les sites sécurisés.</p>
+            <div class="external-doc-banner">
+                <h4>Directive Exécutive Suprême — Certifiée O5</h4>
+                <p>Consultez l'acte officiel scellé régissant les pleins pouvoirs et les dispositions réglementaires de l'IPM.</p>
+                <!-- Lien direct reliant index.html à document_ipm.html -->
+                <a href="document_ipm.html" target="_blank" class="external-link-btn">
+                    Ouvrir le Document Officiel (document_ipm.html)
+                </a>
             </div>
         </div>
 
