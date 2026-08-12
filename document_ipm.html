@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCUMENT OFFICIEL — CONSEIL O5 / IPM</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+
+        :root {
+            --bg: #020402;
+            --card-bg: #070d07;
+            --border: #1e331e;
+            --accent: #22c55e;
+            --accent-glow: rgba(34, 197, 94, 0.2);
+            --red-accent: #ef4444;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+        }
+
+        .decree-wrapper {
+            width: 100%;
+            max-width: 850px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.9), inset 0 0 40px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .decree-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-30deg);
+            font-family: 'Cinzel', serif;
+            font-size: 6rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.015);
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 10px;
+        }
+
+        .decree-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 25px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .foundation-seal {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .seal-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #000;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--accent-glow);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .seal-text h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: var(--text-main);
+        }
+
+        .seal-text span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--accent);
+        }
+
+        .decree-meta {
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .decree-meta span {
+            color: var(--red-accent);
+            font-weight: 600;
+        }
+
+        .decree-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .decree-title h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .decree-title p {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .decree-body {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 30px;
+        }
+
+        .decree-body p {
+            font-size: 0.92rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .decree-body p strong {
+            color: var(--text-main);
+        }
+
+        .directives-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .directives-box h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .directives-box ul {
+            list-style: none;
+        }
+
+        .directives-box ul li {
+            position: relative;
+            padding-left: 18px;
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .directives-box ul li::before {
+            content: '■';
+            position: absolute;
+            left: 0;
+            font-size: 0.6rem;
+            color: var(--accent);
+            top: 2px;
+        }
+
+        .decree-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-top: 1px solid var(--border);
+            padding-top: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .signature-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .signature-block .sign-title {
+            color: var(--text-main);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .stamp {
+            border: 2px dashed var(--red-accent);
+            color: var(--red-accent);
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            font-size: 0.8rem;
+            padding: 8px 16px;
+            border-radius: 4px;
+            transform: rotate(-5deg);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .action-links {
+            margin-top: 25px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .discord-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #8ea1e1;
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+        }
+
+        .discord-link:hover {
+            background: rgba(88, 101, 242, 0.2);
+            border-color: rgba(88, 101, 242, 0.6);
+            color: #fff;
+        }
+
+        @media(max-width: 700px) {
+            .decree-header { flex-direction: column; gap: 15px; }
+            .decree-meta { text-align: left; }
+            .decree-footer { flex-direction: column; gap: 20px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="decree-wrapper">
+        <div class="watermark">CLASSIFIED O5</div>
+
+        <!-- En-tête du document officiel -->
+        <div class="decree-header">
+            <div class="foundation-seal">
+                <div class="seal-icon">SCP</div>
+                <div class="seal-text">
+                    <h2>CONSEIL O5</h2>
+                    <span>HAUT COMMANDEMENT MONDIAL</span>
+                </div>
+            </div>
+            <div class="decree-meta">
+                <div>DOC-ID: <span>O5-DIR-2026-994X</span></div>
+                <div>CLASSIFICATION: <span>NIVEAU 5 / ULTRA-SECRET</span></div>
+                <div>DATE: <span>12 AOÛT 2026</span></div>
+            </div>
+        </div>
+
+        <!-- Titre du Décret -->
+        <div class="decree-title">
+            <h1>DIRECTIVE EXÉCUTIVE SUPRÊME</h1>
+            <p>Ratification et Pleins Pouvoirs de l'Inspection & Police Militaire (IPM)</p>
+        </div>
+
+        <!-- Corps du Décret -->
+        <div class="decree-body">
+            <p>Par le présent décret certifié, le <strong>Conseil O5</strong> valide officiellement la structure hiérarchique intégrale de l'<strong>Inspection & Police Militaire (IPM)</strong>, englobant sa Haute Présidence, son Commandement Mondial ainsi que ses Forces Militaires Standard.</p>
+            
+            <p>L'IPM demeure l'unique autorité indépendante habilitée à mener des audits de sécurité, des enquêtes de corruption et des procédures disciplinaires à l'encontre de tout membre du personnel de la Fondation, sans exception de grade ou d'habilitation.</p>
+
+            <div class="directives-box">
+                <h4>Dispositions et Injonctions du Conseil :</h4>
+                <ul>
+                    <li><strong>Primauté Exécutive :</strong> Les ordres émanant du Président IPM et du Président Adjoint IPM ont valeur exécutoire immédiate sur l'ensemble des sites sécurisés.</li>
+                    <li><strong>Immunité Opérationnelle :</strong> Toute entrave aux investigations menées par les forces de l'IPM sera considérée comme une haute trahison envers la Fondation.</li>
+                    <li><strong>Niveau d'Alerte Permanent :</strong> La branche maintient en tout temps le statut d'alerte <strong>Alpha</strong> pour parer à toute crise interne critique.</li>
+                </ul>
+            </div>
+
+            <p>Toute tentative de dissimulation d'informations ou de résistance armée face aux équipes d'inspection de l'IPM entraînera une destitution immédiate et une réassignation en tant que personnel de Classe D.</p>
+        </div>
+
+        <!-- Pied de page & Signatures -->
+        <div class="decree-footer">
+            <div class="signature-block">
+                <div class="sign-title">AUTHENTIFIÉ PAR LE CONSEIL O5</div>
+                <div>Scellement cryptographique : [OK-05-SEC-994]</div>
+                <div>Canal de commandement sécurisé actif.</div>
+            </div>
+            <div class="stamp">
+                CERTIFIÉ OFFICIEL<br>CONSEIL O5
+            </div>
+        </div>
+
+        <!-- Lien Discord de la structure -->
+        <div class="action-links">
+            <a href="https://discord.gg/8XDDm6cFGA" target="_blank" class="discord-link">
+                <span>Accéder au Réseau Sécurisé Discord de l'IPM</span>
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
